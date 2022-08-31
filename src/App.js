@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import UserForm from './components/Users/UserForm.js';
+import UserList from './components/Users/UserList.js';
+import ErrorModal from './components/UI/ErrorModal.js';
+// import styles from './App.module.css';
 
-function App() {
+const App = () => {
+  // Store all users in array here
+  const [userArray, setUserArray] = useState([]);
+  // State for input validation
+  const [errorCode, setErrorCode] = useState(0);
+  // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Accept new user data from UserForm.js
+  const addUserHandler = (user) => {
+    setUserArray((prevUserArray) => {
+      return [...prevUserArray, user];
+    });
+  };
+
+  // Accepts an error code from UserForm.js
+  const errorHandler = (code) => {
+    setErrorCode(code);
+  };
+
+  // Get close modal status from ErrorModal.js
+  const closeHandler = () => {
+    setIsModalOpen(false);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ErrorModal
+        code={errorCode}
+        onClose={closeHandler}
+      />
+      <UserForm
+        onAddUser={addUserHandler}
+        onError={errorHandler}
+      />
+      {userArray.length !== 0 && (
+        <UserList users={userArray} />
+      )}
     </div>
   );
 }
