@@ -5,19 +5,15 @@ const ErrorModal = (props) => {
 	const clickHandler = () => {
 		props.onClose();
 	}
-	let errorMessage = 'Please enter a valid name and age (non-empty values)';
-	if (props.code === 2) {
-		errorMessage = 'Please enter a valid age (> 0)';
-	}
 
 	return (
-		<div className={`${props.code ? styles.open : styles.closed}`}>
+		<div className={`${props.isOpen ? styles.open : styles.closed}`}>
 			<div className={styles.modal}>
 				<header>
-					<h2>Invalid Input</h2>
+					<h2>{props.title}</h2>
 				</header>
 				<div>
-					<p>{errorMessage}</p>
+					<p>{props.message}</p>
 				</div>
 				<footer>
 					<Button onClick={clickHandler}>Close</Button>

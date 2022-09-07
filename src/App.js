@@ -7,8 +7,8 @@ import ErrorModal from './components/UI/ErrorModal.js';
 const App = () => {
   // Store all users in array here
   const [userArray, setUserArray] = useState([]);
-  // State for input validation
-  const [errorCode, setErrorCode] = useState(0);
+  // State for error message
+  const [errorMsg, setErrorMsg] = useState('');
   // State for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,8 +20,9 @@ const App = () => {
   };
 
   // Accepts an error code from UserForm.js
-  const errorHandler = (code) => {
-    setErrorCode(code);
+  const errorHandler = (msg) => {
+    setErrorMsg(msg);
+    setIsModalOpen(true);
   };
 
   // Get close modal status from ErrorModal.js
@@ -32,7 +33,9 @@ const App = () => {
   return (
     <div>
       <ErrorModal
-        code={errorCode}
+        title='Invalid Input'
+        message={errorMsg}
+        isOpen={isModalOpen}
         onClose={closeHandler}
       />
       <UserForm

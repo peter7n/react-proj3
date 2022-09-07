@@ -32,16 +32,15 @@ const UserForm = (props) => {
 	}
 
 	// If invalid input, pass error code 'up' to App.js
-	// Error code 1=blank input, 2=invalid age
 	const isInputValid = () => {
 		if (enteredName === '' || enteredAge === '') {
-			props.onError(1);
+			props.onError('Please enter a valid name and age (non-empty values)');
 			setEnteredName('');
 			setEnteredAge('');
 			return false;
 		}
 		if (enteredAge <= 0) {
-			props.onError(2);
+			props.onError('Please enter a valid age (> 0)');
 			setEnteredName('');
 			setEnteredAge('');
 			return false;
