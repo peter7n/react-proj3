@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import UserForm from './components/Users/UserForm.js';
 import UserList from './components/Users/UserList.js';
 import ErrorModal from './components/UI/ErrorModal.js';
@@ -31,7 +31,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Fragment>
       <ErrorModal
         title='Invalid Input'
         message={errorMsg}
@@ -45,7 +45,7 @@ const App = () => {
       {userArray.length !== 0 && (
         <UserList users={userArray} />
       )}
-    </div>
+    </Fragment>
   );
 }
 
