@@ -4,15 +4,11 @@ import ReactDom from 'react-dom';
 import { Fragment } from 'react';
 
 const Backdrop = (props) => {
-	const clickHandler = (props) => {
-		props.onClose();
-	}
-	
 	return (
 		<div className={`${props.isOpen ? styles.open : styles.closed}`}>
 			<div
 				className={styles.background}
-				onClick={clickHandler}
+				onClick={props.onClose}
 			>
 			</div>
 		</div>
@@ -20,10 +16,6 @@ const Backdrop = (props) => {
 };
 
 const ModalOverlay = (props) => {
-	const clickHandler = (props) => {
-		props.onClose();
-	}
-	
 	return (
 		<div className={`${props.isOpen ? styles.open : styles.closed}`}>
 			<div className={styles.modal}>
@@ -34,7 +26,7 @@ const ModalOverlay = (props) => {
 					<p>{props.message}</p>
 				</div>
 				<footer>
-					<Button onClick={clickHandler}>Close</Button>
+					<Button onClick={props.onClose}>Close</Button>
 				</footer>
 			</div>
 		</div>
@@ -42,10 +34,14 @@ const ModalOverlay = (props) => {
 };
 
 const ErrorModal = (props) => {
+	// const clickHandler = () => {
+	// 	props.onClose();
+	// }
+
 	return (
 		<Fragment>
-			{ReactDom.createPortal(<Backdrop />, document.getElementById('backdrop-root'))}
-			{ReactDom.createPortal(<ModalOverlay />, document.getElementById('overlay-root'))}
+			{ReactDom.createPortal(<Backdrop isOpen={props.isOpen} onClose={props.onClose} />, document.getElementById('backdrop-root'))}
+			{ReactDom.createPortal(<ModalOverlay title={props.title} message={props.message} isOpen={props.isOpen} onClose={props.onClose} />, document.getElementById('overlay-root'))}
 		</Fragment>
 	);
 };
